@@ -7,43 +7,35 @@ public class Book {
     private String[] authors;
 
     public Book(String name, int year, PublishingHouse publishingHouse) {
-        checkBase(name, year, publishingHouse);
-        this.name = name;
-        this.year = year;
-        this.publishingHouse = publishingHouse;
+        setName(name);
+        setYear(year);
+        setPublishingHouse(publishingHouse);
     }
 
     public Book(String name, String author, int year, PublishingHouse publishingHouse) {
-        checkBase(name, year, publishingHouse);
-        this.name = name;
+        setName(name);
         if (author==null)
             throw new IllegalArgumentException("Список авторов не содержать пустых ссылок");
         else
-            this.authors = new String[]{author};
-        this.year = year;
-        this.publishingHouse = publishingHouse;
+            setAuthors(new String[]{author});
+        setYear(year);
+        setPublishingHouse(publishingHouse);
     }
 
     public Book(String name, String[] authors, int year, PublishingHouse publishingHouse) {
-        checkBase(name, year, publishingHouse);
-        checkAuthorsNullSel(authors);
-        this.name = name;
-        this.authors = authors;
-        this.year = year;
-        this.publishingHouse = publishingHouse;
+        setName(name);
+        setAuthors(authors);
+        setYear(year);
+        setPublishingHouse(publishingHouse);
     }
 
     public String getName() {
         return name;
     }
 
-    private static void checkName(String name) {
+    public void setName(String name) {
         if (name==null)
             throw new IllegalArgumentException("Книга должна иметь название");
-    }
-
-    public void setName(String name) {
-        checkName(name);
         this.name = name;
     }
 
@@ -51,13 +43,9 @@ public class Book {
         return publishingHouse;
     }
 
-    private static void checkPubHouse(PublishingHouse publishingHouse) {
+    public void setPublishingHouse(PublishingHouse publishingHouse) {
         if (publishingHouse==null)
             throw new IllegalArgumentException("Книга должна иметь издателя");
-    }
-
-    public void setPublishingHouse(PublishingHouse publishingHouse) {
-        checkPubHouse(publishingHouse);
         this.publishingHouse = publishingHouse;
     }
 
@@ -65,13 +53,9 @@ public class Book {
         return year;
     }
 
-    private static void checkYear(int year) {
+    public void setYear(int year) {
         if (year<=0)
             throw new IllegalArgumentException("Книга должна быть написана в новое время");
-    }
-
-    public void setYear(int year) {
-        checkYear(year);
         this.year = year;
     }
 
@@ -79,16 +63,12 @@ public class Book {
         return authors;
     }
 
-    private static void checkAuthorsNullSel(String[] authors) {
+    public void setAuthors(String[] authors) {
         for (String s : authors) {
             if (s==null) {
                 throw new IllegalArgumentException("Список авторов не содержать пустых ссылок");
             }
         }
-    }
-
-    public void setAuthors(String[] authors) {
-        checkAuthorsNullSel(authors);
         this.authors = authors;
     }
 
@@ -115,8 +95,8 @@ public class Book {
             for (String s : authors) {
                 a=a + s + ", ";
             }
-            System.out.println("Книга: " + name + (authors.length==1 ? ". Автор: " + a.substring(0, a.length()-2) : ". Авторы: " + a.substring(0, a.length()-2)) + ". Издательство: "
-                    + getPublishingHouse().getName() + ", " + getPublishingHouse().getCity() + ". Год издания: " + year);
+            System.out.println("Книга: " + name + (authors.length==1 ? ". Автор: " + a.substring(0, a.length()-2) : ". Авторы: " + a.substring(0, a.length()-2))
+                    + ". Издательство: " + getPublishingHouse().getName() + ", " + getPublishingHouse().getCity() + ". Год издания: " + year);
         }
         else {
             System.out.println("Книга: " + name + ". Издательство: "
@@ -128,11 +108,5 @@ public class Book {
         for (Book c : books) {
             c.print();
         }
-    }
-
-    private static void checkBase(String name, int year, PublishingHouse publishingHouse) {
-        checkName(name);
-        checkYear(year);
-        checkPubHouse(publishingHouse);
     }
 }
